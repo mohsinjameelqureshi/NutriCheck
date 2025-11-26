@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@color/white">
+
+    <!-- App Logo -->
+    <ImageView
+        android:id="@+id/appLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/app_logo"
+        android:layout_marginBottom="10dp"/>
+
+
+    <!-- App short description -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan food, stay safe.\nPersonalized nutrition made easy."
+        android:textAlignment="center"
+        android:textColor="#7A7A7A"
+        android:textSize="16sp"
+        android:layout_marginBottom="35dp"/>
+
+    <!-- Google Signup Button -->
+    <LinearLayout
+        android:id="@+id/googleSignupBtn"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/google_button_bg"
+        android:padding="12dp">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/google_logo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign up with Google"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="18dp"/>
+    </LinearLayout>
+
+</LinearLayout>

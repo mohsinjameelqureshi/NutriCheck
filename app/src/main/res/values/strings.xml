@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NutriCheck</string>
+
+    <!-- Nutri-Score Options -->
+    <string-array name="nutri_score_options">
+        <item>Any (A, B, C, D, E)</item>
+        <item>Good or Better (A, B)</item>
+        <item>Excellent Only (A)</item>
+        <item>Avoid Poor Scores (A, B, C)</item>
+    </string-array>
+
+    <!-- Preference Descriptions -->
+    <string name="diet_description">Choose your dietary preference</string>
+    <string name="allergies_description">Select all that apply</string>
+    <string name="nutrient_description">Set your daily limits per 100g</string>
+    <string name="quality_description">Additional quality filters</string>
+
+    <!-- Messages -->
+    <string name="preferences_saved">Preferences saved successfully!</string>
+    <string name="preferences_error">Please select at least one preference</string>
+    <string name="loading">Loading...</string>
+</resources>

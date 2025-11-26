@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="0dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/teal_700"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:elevation="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🍎 Set Your Preferences"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Help us personalize your nutrition experience"
+                android:textSize="14sp"
+                android:textColor="#E0F2F1"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- Content Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Diet Type Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:text="🥗 Diet Type"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginBottom="12dp"/>
+
+                    <RadioGroup
+                        android:id="@+id/radioDiet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/rbNone"
+                            android:text="None"
+                            android:textSize="16sp"
+                            android:padding="8dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content" />
+
+                        <RadioButton
+                            android:id="@+id/rbVegetarian"
+                            android:text="Vegetarian"
+                            android:textSize="16sp"
+                            android:padding="8dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content" />
+
+                        <RadioButton
+                            android:id="@+id/rbVegan"
+                            android:text="Vegan"
+                            android:textSize="16sp"
+                            android:padding="8dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content" />
+
+                        <RadioButton
+                            android:id="@+id/rbHalal"
+                            android:text="Halal"
+                            android:textSize="16sp"
+                            android:padding="8dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content" />
+
+                        <RadioButton
+                            android:id="@+id/rbKosher"
+                            android:text="Kosher"
+                            android:textSize="16sp"
+                            android:padding="8dp"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content" />
+                    </RadioGroup>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Allergies Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:text="Allergies  Intolerances"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginBottom="12dp"/>
+
+                    <CheckBox
+                        android:id="@+id/chkPeanuts"
+                        android:text="Peanuts"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkTreeNuts"
+                        android:text="Tree Nuts (Almonds, Walnuts, Cashews)"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkMilk"
+                        android:text="Milk Dairy"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkGluten"
+                        android:text="Gluten (Wheat, Barley, Rye)"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkEggs"
+                        android:text="Eggs"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkSoy"
+                        android:text="Soy"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkFish"
+                        android:text="Fish"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkShellfish"
+                        android:text="Shellfish (Shrimp, Crab, Lobster)"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkSesame"
+                        android:text="Sesame"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Nutrient Limits Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:text="📊 Daily Nutrient Limits (per 100g)"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginBottom="12dp"/>
+
+                    <!-- Sugar Limit -->
+                    <TextView
+                        android:text="Maximum Sugar"
+                        android:textSize="14sp"
+                        android:textColor="#757575"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="8dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <SeekBar
+                            android:id="@+id/seekSugar"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:max="50"
+                            android:progress="15" />
+
+                        <TextView
+                            android:id="@+id/tvSugarValue"
+                            android:text="15g"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/teal_700"
+                            android:layout_width="60dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <!-- Salt Limit -->
+                    <TextView
+                        android:text="Maximum Salt"
+                        android:textSize="14sp"
+                        android:textColor="#757575"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <SeekBar
+                            android:id="@+id/seekSalt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:max="50"
+                            android:progress="10" />
+
+                        <TextView
+                            android:id="@+id/tvSaltValue"
+                            android:text="1.0g"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/teal_700"
+                            android:layout_width="60dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <!-- Saturated Fat Limit -->
+                    <TextView
+                        android:text="Maximum Saturated Fat"
+                        android:textSize="14sp"
+                        android:textColor="#757575"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <SeekBar
+                            android:id="@+id/seekSatFat"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:max="40"
+                            android:progress="8" />
+
+                        <TextView
+                            android:id="@+id/tvSatFatValue"
+                            android:text="8g"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/teal_700"
+                            android:layout_width="60dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <!-- Calories Limit -->
+                    <TextView
+                        android:text="Maximum Calories"
+                        android:textSize="14sp"
+                        android:textColor="#757575"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="16dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <SeekBar
+                            android:id="@+id/seekCalories"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:max="1000"
+                            android:progress="300" />
+
+                        <TextView
+                            android:id="@+id/tvCaloriesValue"
+                            android:text="300 kcal"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/teal_700"
+                            android:layout_width="80dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Ingredient Blacklist Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:text="🚫 Avoid These Ingredients"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginBottom="12dp"/>
+
+                    <CheckBox
+                        android:id="@+id/chkMSG"
+                        android:text="MSG (Monosodium Glutamate)"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkAspartame"
+                        android:text="Aspartame (Artificial Sweetener)"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkHighFructose"
+                        android:text="High Fructose Corn Syrup"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkArtificialColors"
+                        android:text="Artificial Colors (E102, E110, etc.)"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkPalmOil"
+                        android:text="Palm Oil"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Quality Preferences Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:text="✨ Quality Preferences"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginBottom="12dp"/>
+
+                    <CheckBox
+                        android:id="@+id/chkAvoidAdditives"
+                        android:text="Avoid Additives Preservatives"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <CheckBox
+                        android:id="@+id/chkAvoidNOVA4"
+                        android:text="Avoid Ultra-Processed Foods (NOVA 4)"
+                        android:textSize="16sp"
+                        android:padding="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <TextView
+                        android:text="Minimum Nutri-Score"
+                        android:textSize="14sp"
+                        android:textColor="#757575"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="12dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinnerNutriScore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:entries="@array/nutri_score_options" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Save Button -->
+            <Button
+                android:id="@+id/btnSavePreferences"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Save Preferences"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/teal_700"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                app:cornerRadius="12dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
