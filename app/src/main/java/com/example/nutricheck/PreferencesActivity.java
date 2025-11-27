@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -239,6 +241,20 @@ public class PreferencesActivity extends AppCompatActivity {
         // String json = gson.toJson(preferences);
         // editor.putString("user_preferences", json);
         // editor.apply();
+
+
+//        FirebaseFirestore.getInstance()
+//                .collection("preferences")
+//                .add(preferences)
+//                .addOnSuccessListener(documentReference -> {
+//                    Log.d("FB", "Preferences saved with ID: " + documentReference.getId());
+//                    Toast.makeText(this, "Saved to Firebase!", Toast.LENGTH_SHORT).show();
+//                })
+//                .addOnFailureListener(e -> {
+//                    Log.e("FB", "Error saving preferences", e);
+//                    Toast.makeText(this, "Error saving to Firebase!", Toast.LENGTH_SHORT).show();
+//                });
+
 
         // TODO: Save to Firebase Firestore
         // FirebaseFirestore db = FirebaseFirestore.getInstance();
