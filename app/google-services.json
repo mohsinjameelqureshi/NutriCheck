@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "82080795530",
+    "project_id": "nutricheck-a71c6",
+    "storage_bucket": "nutricheck-a71c6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82080795530:android:8993fe048ed331fff81673",
+        "android_client_info": {
+          "package_name": "com.example.nutricheck"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0N12yuAPpmlzKjQj0qsjLYrvW4_1fFx0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,5 +19,21 @@
     <!-- Messages -->
     <string name="preferences_saved">Preferences saved successfully!</string>
     <string name="preferences_error">Please select at least one preference</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
+
+    <!-- Preference Labels (Safe Text without ampersands) -->
+    <string name="allergies_intolerances">Allergies and Intolerances</string>
+    <string name="milk_dairy">Milk and Dairy</string>
+    <string name="additives_preservatives">Additives and Preservatives</string>
+
+    <!-- API Field Mappings -->
+    <string name="api_allergens_tags">allergens_tags</string>
+    <string name="api_additives_tags">additives_tags</string>
+    <string name="api_nutriments">nutriments</string>
+    <string name="api_nova_group">nova_group</string>
+    <string name="api_nutriscore_grade">nutriscore_grade</string>
+
+    <!-- Common Symbols (Use these instead of direct ampersands) -->
+    <string name="and_symbol">&amp;</string>
+    <string name="ampersand">&amp;</string>
 </resources>

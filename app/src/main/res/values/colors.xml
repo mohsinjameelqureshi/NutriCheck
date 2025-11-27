@@ -2,5 +2,34 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="teal_700">#00796B</color>
+
+    <!-- Primary Colors -->
+    <color name="teal_700">#00897B</color>
+    <color name="teal_500">#009688</color>
+    <color name="teal_200">#80CBC4</color>
+
+    <!-- Background Colors -->
+    <color name="background_light">#F8F9FA</color>
+    <color name="card_background">#FFFFFF</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#1A1A1A</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#9E9E9E</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_green">#4CAF50</color>
+    <color name="accent_red">#D32F2F</color>
+    <color name="accent_orange">#FF9800</color>
+
+    <!-- Nutri-Score Colors -->
+    <color name="nutri_a">#038141</color>
+    <color name="nutri_b">#85BB2F</color>
+    <color name="nutri_c">#FECB02</color>
+    <color name="nutri_d">#EE8100</color>
+    <color name="nutri_e">#E63E11</color>
+
+    <!-- Border & Divider -->
+    <color name="border_light">#E0E0E0</color>
+    <color name="divider">#EEEEEE</color>
 </resources>

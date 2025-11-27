@@ -1,7 +1,10 @@
 package com.example.nutricheck;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
@@ -19,21 +22,23 @@ import java.util.Map;
 
 public class PreferencesActivity extends AppCompatActivity {
 
+    private static final String TAG = "PreferencesActivity";
+
     // UI Elements
     RadioGroup radioDiet;
 
-    // Allergies
+    // Allergies (Based on allergens_tags from API)
     CheckBox chkPeanuts, chkTreeNuts, chkMilk, chkGluten, chkEggs, chkSoy, chkFish, chkShellfish, chkSesame;
 
-    // Nutrient Limits
+    // Nutrient Limits (Based on nutriments from API)
     SeekBar seekSugar, seekSalt, seekSatFat, seekCalories;
     TextView tvSugarValue, tvSaltValue, tvSatFatValue, tvCaloriesValue;
 
-    // Ingredient Blacklist
-    CheckBox chkMSG, chkAspartame, chkHighFructose, chkArtificialColors, chkPalmOil;
+    // Additives (Based on additives_tags from API)
+    CheckBox chkE150d, chkE290, chkE338, chkPalmOil, chkAvoidAllAdditives;
 
-    // Quality Preferences
-    CheckBox chkAvoidAdditives, chkAvoidNOVA4;
+    // Quality Preferences (Based on nova_group and nutriscore_grade from API)
+    CheckBox chkAvoidNOVA4;
     Spinner spinnerNutriScore;
 
     Button btnSavePreferences;
@@ -75,15 +80,14 @@ public class PreferencesActivity extends AppCompatActivity {
         tvSatFatValue = findViewById(R.id.tvSatFatValue);
         tvCaloriesValue = findViewById(R.id.tvCaloriesValue);
 
-        // Ingredient Blacklist
-        chkMSG = findViewById(R.id.chkMSG);
-        chkAspartame = findViewById(R.id.chkAspartame);
-        chkHighFructose = findViewById(R.id.chkHighFructose);
-        chkArtificialColors = findViewById(R.id.chkArtificialColors);
+        // Additives
+        chkE150d = findViewById(R.id.chkE150d);
+        chkE290 = findViewById(R.id.chkE290);
+        chkE338 = findViewById(R.id.chkE338);
         chkPalmOil = findViewById(R.id.chkPalmOil);
+        chkAvoidAllAdditives = findViewById(R.id.chkAvoidAllAdditives);
 
         // Quality Preferences
-        chkAvoidAdditives = findViewById(R.id.chkAvoidAdditives);
         chkAvoidNOVA4 = findViewById(R.id.chkAvoidNOVA4);
         spinnerNutriScore = findViewById(R.id.spinnerNutriScore);
 
@@ -92,7 +96,7 @@ public class PreferencesActivity extends AppCompatActivity {
     }
 
     private void setupSeekBars() {
-        // Sugar SeekBar (0-50g, step 1g)
+        // Sugar SeekBar (0-50g)
         seekSugar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -106,7 +110,7 @@ public class PreferencesActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        // Salt SeekBar (0-5g, step 0.1g)
+        // Salt SeekBar (0-5g with 0.1g precision)
         seekSalt.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -121,7 +125,7 @@ public class PreferencesActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        // Saturated Fat SeekBar (0-40g, step 1g)
+        // Saturated Fat SeekBar (0-40g)
         seekSatFat.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -135,11 +139,11 @@ public class PreferencesActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        // Calories SeekBar (0-1000 kcal, step 10 kcal)
+        // Calories SeekBar (0-1000 kcal)
         seekCalories.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int calories = (progress / 10) * 10; // Round to nearest 10
+                int calories = (progress / 10) * 10;
                 tvCaloriesValue.setText(calories + " kcal");
             }
 
@@ -155,6 +159,7 @@ public class PreferencesActivity extends AppCompatActivity {
         btnSavePreferences.setOnClickListener(v -> {
             if (validatePreferences()) {
                 savePreferences();
+
             }
         });
     }
@@ -177,10 +182,10 @@ public class PreferencesActivity extends AppCompatActivity {
     }
 
     private void savePreferences() {
-        // Collect all preference data
+        // Collect all preference data mapped to API structure
         Map<String, Object> preferences = new HashMap<>();
 
-        // 1. Diet Type
+        // 1. Diet Type (for ingredients_tags checking)
         int selectedId = radioDiet.getCheckedRadioButtonId();
         String dietType = "None";
         if (selectedId != -1) {
@@ -189,45 +194,53 @@ public class PreferencesActivity extends AppCompatActivity {
         }
         preferences.put("dietType", dietType);
 
-        // 2. Allergies
+        // 2. Allergies (Maps to API allergens_tags)
         ArrayList<String> allergies = new ArrayList<>();
-        if (chkPeanuts.isChecked()) allergies.add("peanuts");
-        if (chkTreeNuts.isChecked()) allergies.add("tree-nuts");
-        if (chkMilk.isChecked()) allergies.add("milk");
-        if (chkGluten.isChecked()) allergies.add("gluten");
-        if (chkEggs.isChecked()) allergies.add("eggs");
-        if (chkSoy.isChecked()) allergies.add("soy");
-        if (chkFish.isChecked()) allergies.add("fish");
-        if (chkShellfish.isChecked()) allergies.add("shellfish");
-        if (chkSesame.isChecked()) allergies.add("sesame");
+        if (chkPeanuts.isChecked()) allergies.add("en:peanuts");
+        if (chkTreeNuts.isChecked()) allergies.add("en:nuts");
+        if (chkMilk.isChecked()) allergies.add("en:milk");
+        if (chkGluten.isChecked()) allergies.add("en:gluten");
+        if (chkEggs.isChecked()) allergies.add("en:eggs");
+        if (chkSoy.isChecked()) allergies.add("en:soybeans");
+        if (chkFish.isChecked()) allergies.add("en:fish");
+        if (chkShellfish.isChecked()) allergies.add("en:crustaceans");
+        if (chkSesame.isChecked()) allergies.add("en:sesame-seeds");
         preferences.put("allergies", allergies);
 
-        // 3. Nutrient Limits
+        // 3. Nutrient Limits (Maps to API nutriments values)
         Map<String, Float> nutrientLimits = new HashMap<>();
-        nutrientLimits.put("maxSugar", (float) seekSugar.getProgress());
-        nutrientLimits.put("maxSalt", seekSalt.getProgress() / 10.0f);
-        nutrientLimits.put("maxSaturatedFat", (float) seekSatFat.getProgress());
-        nutrientLimits.put("maxCalories", (float) ((seekCalories.getProgress() / 10) * 10));
+        nutrientLimits.put("sugars_100g", (float) seekSugar.getProgress());
+        nutrientLimits.put("salt_100g", seekSalt.getProgress() / 10.0f);
+        nutrientLimits.put("saturated-fat_100g", (float) seekSatFat.getProgress());
+        nutrientLimits.put("energy-kcal_100g", (float) ((seekCalories.getProgress() / 10) * 10));
         preferences.put("nutrientLimits", nutrientLimits);
 
-        // 4. Ingredient Blacklist
-        ArrayList<String> blacklist = new ArrayList<>();
-        if (chkMSG.isChecked()) blacklist.add("msg");
-        if (chkAspartame.isChecked()) blacklist.add("aspartame");
-        if (chkHighFructose.isChecked()) blacklist.add("high-fructose-corn-syrup");
-        if (chkArtificialColors.isChecked()) blacklist.add("artificial-colors");
-        if (chkPalmOil.isChecked()) blacklist.add("palm-oil");
-        preferences.put("ingredientBlacklist", blacklist);
+        // 4. Additives to Avoid (Maps to API additives_tags)
+        ArrayList<String> avoidAdditives = new ArrayList<>();
+        if (chkE150d.isChecked()) avoidAdditives.add("en:e150d");
+        if (chkE290.isChecked()) avoidAdditives.add("en:e290");
+        if (chkE338.isChecked()) avoidAdditives.add("en:e338");
+        if (chkPalmOil.isChecked()) avoidAdditives.add("en:palm-oil");
+        preferences.put("avoidAdditives", avoidAdditives);
+        preferences.put("avoidAllAdditives", chkAvoidAllAdditives.isChecked());
 
-        // 5. Quality Preferences
-        preferences.put("avoidAdditives", chkAvoidAdditives.isChecked());
+        // 5. Quality Preferences (Maps to API nova_group and nutriscore_grade)
         preferences.put("avoidNOVA4", chkAvoidNOVA4.isChecked());
         preferences.put("minNutriScore", spinnerNutriScore.getSelectedItem().toString());
 
         // Display summary
         showPreferencesSummary(preferences);
+        Log.d(TAG, "savePreferences: " + preferences);
 
-        // TODO: Save to Firestore
+        // TODO: Save to SharedPreferences
+        // SharedPreferences prefs = getSharedPreferences("NutriCheckPrefs", MODE_PRIVATE);
+        // SharedPreferences.Editor editor = prefs.edit();
+        // Gson gson = new Gson();
+        // String json = gson.toJson(preferences);
+        // editor.putString("user_preferences", json);
+        // editor.apply();
+
+        // TODO: Save to Firebase Firestore
         // FirebaseFirestore db = FirebaseFirestore.getInstance();
         // String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         // db.collection("users").document(userId)
@@ -245,7 +258,7 @@ public class PreferencesActivity extends AppCompatActivity {
     }
 
     private void showPreferencesSummary(Map<String, Object> preferences) {
-        StringBuilder summary = new StringBuilder("✅ Preferences Saved!\n\n");
+        StringBuilder summary = new StringBuilder("Preferences Saved Successfully!\n\n");
 
         summary.append("Diet: ").append(preferences.get("dietType")).append("\n");
 
@@ -255,8 +268,13 @@ public class PreferencesActivity extends AppCompatActivity {
         }
 
         Map<String, Float> limits = (Map<String, Float>) preferences.get("nutrientLimits");
-        summary.append(String.format("Sugar limit: %.0fg\n", limits.get("maxSugar")));
-        summary.append(String.format("Salt limit: %.1fg\n", limits.get("maxSalt")));
+        summary.append(String.format("Sugar limit: %.0fg\n", limits.get("sugars_100g")));
+        summary.append(String.format("Salt limit: %.1fg\n", limits.get("salt_100g")));
+
+        ArrayList<String> additives = (ArrayList<String>) preferences.get("avoidAdditives");
+        if (!additives.isEmpty()) {
+            summary.append("Avoiding additives: ").append(additives.size()).append(" types\n");
+        }
 
         Toast.makeText(this, summary.toString(), Toast.LENGTH_LONG).show();
     }

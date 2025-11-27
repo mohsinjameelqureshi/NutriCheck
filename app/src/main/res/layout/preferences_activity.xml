@@ -1,117 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:fillViewport="true">
+    android:background="#F8F9FA">
 
+    <!-- Fixed Beautiful Header -->
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/headerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="0dp">
+        android:background="@drawable/gradient_header"
+        android:orientation="vertical"
+        android:padding="28dp"
+        android:elevation="8dp"
+        android:layout_alignParentTop="true">
 
-        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎯 Set Your Preferences"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:letterSpacing="0.02" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personalize your nutrition journey"
+            android:textSize="15sp"
+            android:textColor="#E8F5E9"
+            android:layout_marginTop="8dp"
+            android:alpha="0.9" />
+    </LinearLayout>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerLayout"
+        android:layout_above="@id/buttonContainer"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/teal_700"
             android:orientation="vertical"
-            android:padding="24dp"
-            android:elevation="4dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🍎 Set Your Preferences"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Help us personalize your nutrition experience"
-                android:textSize="14sp"
-                android:textColor="#E0F2F1"
-                android:layout_marginTop="8dp" />
-        </LinearLayout>
-
-        <!-- Content Container -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp"
+            android:paddingTop="24dp">
 
             <!-- Diet Type Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
-                    <TextView
-                        android:text="🥗 Diet Type"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="#424242"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_marginBottom="12dp"/>
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:text="🥗"
+                            android:textSize="32sp"
+                            android:gravity="center"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:text="Diet Type"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="#1A1A1A"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"/>
+
+                            <TextView
+                                android:text="Select your dietary preference"
+                                android:textSize="13sp"
+                                android:textColor="#757575"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <RadioGroup
                         android:id="@+id/radioDiet"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:divider="@android:color/transparent"
+                        android:showDividers="middle">
 
                         <RadioButton
                             android:id="@+id/rbNone"
                             android:text="None"
                             android:textSize="16sp"
-                            android:padding="8dp"
+                            android:textColor="#424242"
+                            android:padding="12dp"
+                            android:checked="true"
                             android:layout_height="wrap_content"
-                            android:layout_width="wrap_content" />
+                            android:layout_width="wrap_content"
+                            android:buttonTint="@color/teal_700" />
 
                         <RadioButton
                             android:id="@+id/rbVegetarian"
-                            android:text="Vegetarian"
+                            android:text="🌱 Vegetarian"
                             android:textSize="16sp"
-                            android:padding="8dp"
+                            android:textColor="#424242"
+                            android:padding="12dp"
                             android:layout_height="wrap_content"
-                            android:layout_width="wrap_content" />
+                            android:layout_width="wrap_content"
+                            android:buttonTint="@color/teal_700" />
 
                         <RadioButton
                             android:id="@+id/rbVegan"
-                            android:text="Vegan"
+                            android:text="🥬 Vegan"
                             android:textSize="16sp"
-                            android:padding="8dp"
+                            android:textColor="#424242"
+                            android:padding="12dp"
                             android:layout_height="wrap_content"
-                            android:layout_width="wrap_content" />
+                            android:layout_width="wrap_content"
+                            android:buttonTint="@color/teal_700" />
 
                         <RadioButton
                             android:id="@+id/rbHalal"
-                            android:text="Halal"
+                            android:text="☪️ Halal"
                             android:textSize="16sp"
-                            android:padding="8dp"
+                            android:textColor="#424242"
+                            android:padding="12dp"
                             android:layout_height="wrap_content"
-                            android:layout_width="wrap_content" />
+                            android:layout_width="wrap_content"
+                            android:buttonTint="@color/teal_700" />
 
                         <RadioButton
                             android:id="@+id/rbKosher"
-                            android:text="Kosher"
+                            android:text="✡️ Kosher"
                             android:textSize="16sp"
-                            android:padding="8dp"
+                            android:textColor="#424242"
+                            android:padding="12dp"
                             android:layout_height="wrap_content"
-                            android:layout_width="wrap_content" />
+                            android:layout_width="wrap_content"
+                            android:buttonTint="@color/teal_700" />
                     </RadioGroup>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -120,86 +171,125 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
-                    <TextView
-                        android:text="Allergies  Intolerances"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="#424242"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_marginBottom="12dp"/>
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:text="⚠️"
+                            android:textSize="32sp"
+                            android:gravity="center"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:text="Allergies"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="#1A1A1A"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"/>
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <CheckBox
                         android:id="@+id/chkPeanuts"
-                        android:text="Peanuts"
+                        android:text="🥜 Peanuts"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <CheckBox
                         android:id="@+id/chkTreeNuts"
-                        android:text="Tree Nuts (Almonds, Walnuts, Cashews)"
+                        android:text="🌰 Tree Nuts"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <CheckBox
                         android:id="@+id/chkMilk"
-                        android:text="Milk Dairy"
+                        android:text="🥛 Milk"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <CheckBox
                         android:id="@+id/chkGluten"
-                        android:text="Gluten (Wheat, Barley, Rye)"
+                        android:text="🌾 Gluten"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <CheckBox
                         android:id="@+id/chkEggs"
-                        android:text="Eggs"
+                        android:text="🥚 Eggs"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <CheckBox
                         android:id="@+id/chkSoy"
-                        android:text="Soy"
+                        android:text="🫘 Soy"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <CheckBox
                         android:id="@+id/chkFish"
-                        android:text="Fish"
+                        android:text="🐟 Fish"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <CheckBox
                         android:id="@+id/chkShellfish"
-                        android:text="Shellfish (Shrimp, Crab, Lobster)"
+                        android:text="🦐 Shellfish"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
@@ -207,7 +297,9 @@
                         android:id="@+id/chkSesame"
                         android:text="Sesame"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
                 </LinearLayout>
@@ -217,30 +309,62 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:text="📊"
+                            android:textSize="32sp"
+                            android:gravity="center"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:text="Nutrient Limits"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="#1A1A1A"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"/>
+
+                            <TextView
+                                android:text="Maximum per 100g"
+                                android:textSize="13sp"
+                                android:textColor="#757575"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Sugar -->
                     <TextView
-                        android:text="📊 Daily Nutrient Limits (per 100g)"
-                        android:textSize="18sp"
+                        android:text="Sugar"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         android:textColor="#424242"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_marginBottom="12dp"/>
-
-                    <!-- Sugar Limit -->
-                    <TextView
-                        android:text="Maximum Sugar"
-                        android:textSize="14sp"
-                        android:textColor="#757575"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="8dp"/>
@@ -249,7 +373,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="8dp">
 
                         <SeekBar
                             android:id="@+id/seekSugar"
@@ -257,33 +382,40 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="50"
-                            android:progress="15" />
+                            android:progress="15"
+                            android:progressTint="@color/teal_700"
+                            android:thumbTint="@color/teal_700" />
 
                         <TextView
                             android:id="@+id/tvSugarValue"
                             android:text="15g"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/teal_700"
-                            android:layout_width="60dp"
+                            android:layout_width="70dp"
                             android:gravity="center"
+                            android:background="@drawable/value_badge"
+                            android:padding="8dp"
+                            android:layout_marginStart="12dp"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
 
-                    <!-- Salt Limit -->
+                    <!-- Salt -->
                     <TextView
-                        android:text="Maximum Salt"
-                        android:textSize="14sp"
-                        android:textColor="#757575"
+                        android:text="Salt"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="16dp"/>
+                        android:layout_marginTop="20dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="8dp">
 
                         <SeekBar
                             android:id="@+id/seekSalt"
@@ -291,33 +423,40 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="50"
-                            android:progress="10" />
+                            android:progress="10"
+                            android:progressTint="@color/teal_700"
+                            android:thumbTint="@color/teal_700" />
 
                         <TextView
                             android:id="@+id/tvSaltValue"
                             android:text="1.0g"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/teal_700"
-                            android:layout_width="60dp"
+                            android:layout_width="70dp"
                             android:gravity="center"
+                            android:background="@drawable/value_badge"
+                            android:padding="8dp"
+                            android:layout_marginStart="12dp"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
 
-                    <!-- Saturated Fat Limit -->
+                    <!-- Saturated Fat -->
                     <TextView
-                        android:text="Maximum Saturated Fat"
-                        android:textSize="14sp"
-                        android:textColor="#757575"
+                        android:text="Saturated Fat"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="16dp"/>
+                        android:layout_marginTop="20dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="8dp">
 
                         <SeekBar
                             android:id="@+id/seekSatFat"
@@ -325,33 +464,40 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="40"
-                            android:progress="8" />
+                            android:progress="8"
+                            android:progressTint="@color/teal_700"
+                            android:thumbTint="@color/teal_700" />
 
                         <TextView
                             android:id="@+id/tvSatFatValue"
                             android:text="8g"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/teal_700"
-                            android:layout_width="60dp"
+                            android:layout_width="70dp"
                             android:gravity="center"
+                            android:background="@drawable/value_badge"
+                            android:padding="8dp"
+                            android:layout_marginStart="12dp"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
 
-                    <!-- Calories Limit -->
+                    <!-- Calories -->
                     <TextView
-                        android:text="Maximum Calories"
-                        android:textSize="14sp"
-                        android:textColor="#757575"
+                        android:text="Calories"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="16dp"/>
+                        android:layout_marginTop="20dp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="8dp">
 
                         <SeekBar
                             android:id="@+id/seekCalories"
@@ -359,157 +505,248 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="1000"
-                            android:progress="300" />
+                            android:progress="300"
+                            android:progressTint="@color/teal_700"
+                            android:thumbTint="@color/teal_700" />
 
                         <TextView
                             android:id="@+id/tvCaloriesValue"
                             android:text="300 kcal"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             android:textColor="@color/teal_700"
-                            android:layout_width="80dp"
+                            android:layout_width="90dp"
                             android:gravity="center"
+                            android:background="@drawable/value_badge"
+                            android:padding="8dp"
+                            android:layout_marginStart="12dp"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Ingredient Blacklist Card -->
+            <!-- Additives Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
-                    <TextView
-                        android:text="🚫 Avoid These Ingredients"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:text="🚫"
+                            android:textSize="32sp"
+                            android:gravity="center"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:text="Additives to Avoid"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="#1A1A1A"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"/>
+
+                            <TextView
+                                android:text="Based on additives_tags"
+                                android:textSize="13sp"
+                                android:textColor="#757575"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:id="@+id/chkE150d"
+                        android:text="E150d (Caramel Color)"
+                        android:textSize="16sp"
                         android:textColor="#424242"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_marginBottom="12dp"/>
-
-                    <CheckBox
-                        android:id="@+id/chkMSG"
-                        android:text="MSG (Monosodium Glutamate)"
-                        android:textSize="16sp"
-                        android:padding="8dp"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <CheckBox
-                        android:id="@+id/chkAspartame"
-                        android:text="Aspartame (Artificial Sweetener)"
+                        android:id="@+id/chkE290"
+                        android:text="E290 (Carbon Dioxide)"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <CheckBox
-                        android:id="@+id/chkHighFructose"
-                        android:text="High Fructose Corn Syrup"
+                        android:id="@+id/chkE338"
+                        android:text="E338 (Phosphoric Acid)"
                         android:textSize="16sp"
-                        android:padding="8dp"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"/>
-
-                    <CheckBox
-                        android:id="@+id/chkArtificialColors"
-                        android:text="Artificial Colors (E102, E110, etc.)"
-                        android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <CheckBox
                         android:id="@+id/chkPalmOil"
-                        android:text="Palm Oil"
+                        android:text="🌴 Palm Oil"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#EEEEEE"
+                        android:layout_marginVertical="12dp"/>
+
+                    <CheckBox
+                        android:id="@+id/chkAvoidAllAdditives"
+                        android:text="⚡ Avoid All Additives"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#D32F2F"
+                        android:padding="10dp"
+                        android:buttonTint="#D32F2F"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Quality Preferences Card -->
+            <!-- Quality Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
-                    <TextView
-                        android:text="✨ Quality Preferences"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="#424242"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_marginBottom="12dp"/>
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
 
-                    <CheckBox
-                        android:id="@+id/chkAvoidAdditives"
-                        android:text="Avoid Additives Preservatives"
-                        android:textSize="16sp"
-                        android:padding="8dp"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"/>
+                        <TextView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:text="⭐"
+                            android:textSize="32sp"
+                            android:gravity="center"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="12dp">
+
+                            <TextView
+                                android:text="Quality Standards"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:textColor="#1A1A1A"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"/>
+
+                            <TextView
+                                android:text="NOVA and Nutri-Score filters"
+                                android:textSize="13sp"
+                                android:textColor="#757575"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <CheckBox
                         android:id="@+id/chkAvoidNOVA4"
-                        android:text="Avoid Ultra-Processed Foods (NOVA 4)"
+                        android:text="Avoid Ultra-Processed (NOVA 4)"
                         android:textSize="16sp"
-                        android:padding="8dp"
+                        android:textColor="#424242"
+                        android:padding="10dp"
+                        android:buttonTint="@color/teal_700"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"/>
 
                     <TextView
                         android:text="Minimum Nutri-Score"
-                        android:textSize="14sp"
-                        android:textColor="#757575"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:textColor="#424242"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="12dp"/>
+                        android:layout_marginTop="16dp"/>
 
                     <Spinner
                         android:id="@+id/spinnerNutriScore"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
                         android:padding="12dp"
-                        android:background="@android:drawable/btn_dropdown"
+                        android:background="@drawable/spinner_background"
                         android:entries="@array/nutri_score_options" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Save Button -->
-            <Button
-                android:id="@+id/btnSavePreferences"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Save Preferences"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:backgroundTint="@color/teal_700"
-                android:textColor="@color/white"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
-                app:cornerRadius="12dp"/>
-
         </LinearLayout>
+    </ScrollView>
+
+    <!-- Fixed Beautiful Bottom Button -->
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@drawable/button_container_bg"
+        android:elevation="12dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btnSavePreferences"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:text="Save Preferences"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:background="@drawable/button_save"
+            android:textColor="@color/white"
+            android:letterSpacing="0.05"/>
     </LinearLayout>
-</ScrollView>
+
+</RelativeLayout>
