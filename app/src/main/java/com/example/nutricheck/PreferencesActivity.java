@@ -1,8 +1,7 @@
 package com.example.nutricheck;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -14,8 +13,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -25,6 +29,14 @@ import java.util.Map;
 public class PreferencesActivity extends AppCompatActivity {
 
     private static final String TAG = "PreferencesActivity";
+
+    private static final String PREFS_NAME = "NutriCheckPrefs";
+    private static final String KEY_HAS_PREFERENCES = "hasPreferences";
+
+    // Firebase
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private SharedPreferences prefs;
 
     // UI Elements
     RadioGroup radioDiet;
@@ -49,6 +61,20 @@ public class PreferencesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preferences_activity);
+
+        // Initialize Firebase
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
+        // Check if user is logged in
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            // User not logged in, redirect to signup
+            startActivity(new Intent(this, SignupActivity.class));
+            finish();
+            return;
+        }
 
         initializeViews();
         setupSeekBars();
@@ -160,8 +186,7 @@ public class PreferencesActivity extends AppCompatActivity {
     private void setupSaveButton() {
         btnSavePreferences.setOnClickListener(v -> {
             if (validatePreferences()) {
-                savePreferences();
-
+                savePreferencesToFirebase();
             }
         });
     }
@@ -183,16 +208,41 @@ public class PreferencesActivity extends AppCompatActivity {
         return true;
     }
 
-    private void savePreferences() {
+    /**
+     * Remove all emojis and special characters, keep only text
+     */
+    private String cleanText(String text) {
+        if (text == null || text.isEmpty()) {
+            return "none";
+        }
+
+        // Remove emojis and special unicode characters
+        String cleaned = text.replaceAll("[^\\p{L}\\p{N}\\s-]", "");
+
+        // Trim whitespace and convert to lowercase
+        cleaned = cleaned.trim().toLowerCase();
+
+        // Replace multiple spaces with single space
+        cleaned = cleaned.replaceAll("\\s+", " ");
+
+        return cleaned.isEmpty() ? "none" : cleaned;
+    }
+
+    private void savePreferencesToFirebase() {
+        // Show loading state
+        btnSavePreferences.setEnabled(false);
+        btnSavePreferences.setText("Saving...");
+
         // Collect all preference data mapped to API structure
         Map<String, Object> preferences = new HashMap<>();
 
-        // 1. Diet Type (for ingredients_tags checking)
+        // 1. Diet Type (for ingredients_tags checking) - CLEAN TEXT ONLY
         int selectedId = radioDiet.getCheckedRadioButtonId();
-        String dietType = "None";
+        String dietType = "none";
         if (selectedId != -1) {
             RadioButton selected = findViewById(selectedId);
-            dietType = selected.getText().toString();
+            String rawText = selected.getText().toString();
+            dietType = cleanText(rawText); // Remove emojis
         }
         preferences.put("dietType", dietType);
 
@@ -213,8 +263,8 @@ public class PreferencesActivity extends AppCompatActivity {
         Map<String, Float> nutrientLimits = new HashMap<>();
         nutrientLimits.put("sugars_100g", (float) seekSugar.getProgress());
         nutrientLimits.put("salt_100g", seekSalt.getProgress() / 10.0f);
-        nutrientLimits.put("saturated-fat_100g", (float) seekSatFat.getProgress());
-        nutrientLimits.put("energy-kcal_100g", (float) ((seekCalories.getProgress() / 10) * 10));
+        nutrientLimits.put("saturated_fat_100g", (float) seekSatFat.getProgress());
+        nutrientLimits.put("energy_kcal_100g", (float) ((seekCalories.getProgress() / 10) * 10));
         preferences.put("nutrientLimits", nutrientLimits);
 
         // 4. Additives to Avoid (Maps to API additives_tags)
@@ -226,81 +276,85 @@ public class PreferencesActivity extends AppCompatActivity {
         preferences.put("avoidAdditives", avoidAdditives);
         preferences.put("avoidAllAdditives", chkAvoidAllAdditives.isChecked());
 
-        // 5. Quality Preferences (Maps to API nova_group and nutriscore_grade)
+        // 5. Quality Preferences (Maps to API nova_group and nutriscore_grade) - CLEAN TEXT
         preferences.put("avoidNOVA4", chkAvoidNOVA4.isChecked());
-        preferences.put("minNutriScore", spinnerNutriScore.getSelectedItem().toString());
+        String minNutriScore = cleanText(spinnerNutriScore.getSelectedItem().toString());
+        preferences.put("minNutriScore", minNutriScore);
 
-        // Display summary
-        showPreferencesSummary(preferences);
-        Log.d(TAG, "savePreferences: " + preferences);
-
-        // TODO: Save to SharedPreferences
-        // SharedPreferences prefs = getSharedPreferences("NutriCheckPrefs", MODE_PRIVATE);
-        // SharedPreferences.Editor editor = prefs.edit();
-        // Gson gson = new Gson();
-        // String json = gson.toJson(preferences);
-        // editor.putString("user_preferences", json);
-        // editor.apply();
-
-
-//        FirebaseFirestore.getInstance()
-//                .collection("preferences")
-//                .add(preferences)
-//                .addOnSuccessListener(documentReference -> {
-//                    Log.d("FB", "Preferences saved with ID: " + documentReference.getId());
-//                    Toast.makeText(this, "Saved to Firebase!", Toast.LENGTH_SHORT).show();
-//                })
-//                .addOnFailureListener(e -> {
-//                    Log.e("FB", "Error saving preferences", e);
-//                    Toast.makeText(this, "Error saving to Firebase!", Toast.LENGTH_SHORT).show();
-//                });
-
-
-        // TODO: Save to Firebase Firestore
-        // FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        // db.collection("users").document(userId)
-        //   .update("preferences", preferences)
-        //   .addOnSuccessListener(aVoid -> {
-        //       Toast.makeText(this, "Preferences saved successfully!", Toast.LENGTH_SHORT).show();
-        //       navigateToHome();
-        //   })
-        //   .addOnFailureListener(e -> {
-        //       Toast.makeText(this, "Failed to save preferences", Toast.LENGTH_SHORT).show();
-        //   });
-
-        // For now, navigate to home after 2 seconds
-        btnSavePreferences.postDelayed(this::navigateToHome, 2000);
-    }
-
-    private void showPreferencesSummary(Map<String, Object> preferences) {
-        StringBuilder summary = new StringBuilder("Preferences Saved Successfully!\n\n");
-
-        summary.append("Diet: ").append(preferences.get("dietType")).append("\n");
-
-        ArrayList<String> allergies = (ArrayList<String>) preferences.get("allergies");
-        if (!allergies.isEmpty()) {
-            summary.append("Allergies: ").append(allergies.size()).append(" selected\n");
+        // Get current user
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
+            btnSavePreferences.setEnabled(true);
+            btnSavePreferences.setText("Save Preferences");
+            return;
         }
 
-        Map<String, Float> limits = (Map<String, Float>) preferences.get("nutrientLimits");
-        summary.append(String.format("Sugar limit: %.0fg\n", limits.get("sugars_100g")));
-        summary.append(String.format("Salt limit: %.1fg\n", limits.get("salt_100g")));
+        String userId = currentUser.getUid();
 
-        ArrayList<String> additives = (ArrayList<String>) preferences.get("avoidAdditives");
-        if (!additives.isEmpty()) {
-            summary.append("Avoiding additives: ").append(additives.size()).append(" types\n");
-        }
+        // Prepare update data
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("preferences", preferences);
+        updates.put("hasCompletedPreferences", true);
+        updates.put("preferencesUpdatedAt", System.currentTimeMillis());
 
-        Toast.makeText(this, summary.toString(), Toast.LENGTH_LONG).show();
+        // Log the clean data
+        Log.d(TAG, "Saving preferences (NO EMOJIS): " + preferences);
+
+        // Save to Firestore
+        db.collection("users")
+                .document(userId)
+                .update(updates)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "Preferences saved successfully");
+
+                    // Save to SharedPreferences for instant access
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(KEY_HAS_PREFERENCES, true);
+                    editor.apply();
+
+                    Toast.makeText(PreferencesActivity.this,
+                            "Preferences saved successfully!", Toast.LENGTH_SHORT).show();
+
+                    // Navigate to home
+                    navigateToHome();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error saving preferences", e);
+
+                    // If update fails, try setting the data (in case document doesn't exist)
+                    db.collection("users")
+                            .document(userId)
+                            .set(updates)
+                            .addOnSuccessListener(aVoid2 -> {
+                                Log.d(TAG, "Preferences created successfully");
+
+                                // Save to SharedPreferences
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putBoolean(KEY_HAS_PREFERENCES, true);
+                                editor.apply();
+
+                                Toast.makeText(PreferencesActivity.this,
+                                        "Preferences saved successfully!", Toast.LENGTH_SHORT).show();
+                                navigateToHome();
+                            })
+                            .addOnFailureListener(e2 -> {
+                                Log.e(TAG, "Error creating preferences", e2);
+                                Toast.makeText(PreferencesActivity.this,
+                                        "Failed to save preferences. Please try again.",
+                                        Toast.LENGTH_SHORT).show();
+
+                                // Reset button state
+                                btnSavePreferences.setEnabled(true);
+                                btnSavePreferences.setText("Save Preferences");
+                            });
+                });
     }
 
     private void navigateToHome() {
-        // TODO: Replace with actual HomeActivity
-        // Intent intent = new Intent(PreferencesActivity.this, HomeActivity.class);
-        // startActivity(intent);
-        // finish();
-
-        Toast.makeText(this, "Navigating to Home Screen...", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(PreferencesActivity.this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }
